@@ -1,24 +1,23 @@
 <template>
-    <div>
-      <h2>게시글 목록</h2>
-      <ul>
-        <li v-for="post in posts" :key="post.id">
-          <h3>{{ post.description }}</h3>
-          <img :src="post.imageUrl" alt="Post Image" />
-        </li>
-      </ul>
-    </div>
-  </template>
-  
-  <script setup>
-  import { ref } from 'vue';
-  
-  const posts = ref([
-    { id: 1, description: '첫 번째 게시글입니다.', imageUrl: 'http://example.com/image1.jpg' },
-    { id: 2, description: '두 번째 게시글입니다.', imageUrl: 'http://example.com/image2.jpg' },
-    { id: 3, description: '세 번째 게시글입니다.', imageUrl: 'http://example.com/image3.jpg' }
-  ]);
-  </script>
+  <div>
+    <ul>
+      <PostItem v-for="post in posts" :key="post.id" :post="post" />
+    </ul>
+  </div>
+</template>
+
+<script setup>
+import { onMounted, ref } from 'vue';
+import PostItem from '../components/PostItem.vue';
+import { usePostStore } from '../stores/posts';
+
+const postStore = usePostStore();
+const posts = ref(postStore.posts);
+onMounted(()=>{
+    postStore.getPostList();
+  })
+</script>
+
   
   // 10. 모바일 환경을 위한 스타일 추가
   // 모바일 사용자 경험을 개선하기 위해 반응형 디자인을 적용합니다.

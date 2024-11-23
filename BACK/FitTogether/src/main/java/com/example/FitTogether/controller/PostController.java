@@ -39,20 +39,20 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> insertPost(@RequestBody PostDTO post) {
+    public ResponseEntity<?> insertPost(@RequestBody PostDTO post) {
         postService.insertPost(post);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updatePost(@PathVariable int id, @RequestBody PostDTO post) {
+    public ResponseEntity<?> updatePost(@PathVariable int id, @RequestBody PostDTO post) {
         post.setId(id);
         postService.updatePost(post);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePost(@PathVariable int id) {
+    public ResponseEntity<?> deletePost(@PathVariable int id) {
         postService.deletePost(id);
         return ResponseEntity.noContent().build();
     }
