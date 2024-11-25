@@ -1,7 +1,7 @@
 <template>
   <div>
     <ul>
-      <PostItem v-for="post in posts" :key="post.id" :post="post" />
+      <PostItem v-for="post in postStore.postList" :key="post.id" :post="post" />
     </ul>
   </div>
 </template>
@@ -12,9 +12,9 @@ import PostItem from '../components/PostItem.vue';
 import { usePostStore } from '../stores/posts';
 
 const postStore = usePostStore();
-const posts = ref(postStore.posts);
+
 onMounted(()=>{
-    postStore.getPostList();
+  postStore.getPostList();
   })
 </script>
 

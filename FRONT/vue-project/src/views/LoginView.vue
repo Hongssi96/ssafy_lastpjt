@@ -4,13 +4,13 @@
       <form @submit.prevent="login">
         <div>
           <label for="email">이메일:</label>
-          <input type="email" id="email" v-model="email" required />
+          <input type="email" id="email" v-model.trim="email" required />
         </div>
         <div>
           <label for="password">비밀번호:</label>
-          <input type="password" id="password" v-model="password" required />
+          <input type="password" id="password" v-model.trim="password" required />
         </div>
-        <button type="submit">로그인</button>
+        <button @click="login">로그인</button>
       </form>
       <router-link to="/signup"><button>회원가입</button></router-link>
     </div>
@@ -19,22 +19,20 @@
   <script setup>
   import { ref } from 'vue';
   import { useRouter } from 'vue-router';
+  import { useUserStore } from '@/stores/users';
   
-  const email = ref('');
-  const password = ref('');
-  const router = useRouter();
+  const email = ref('')
+  const password = ref('')
   
-  function login() {
-    if (email.value && password.value) {
-      localStorage.setItem('user', JSON.stringify({ email: email.value }));
-      router.push('/');
-    } else {
-      alert('이메일과 비밀번호를 입력해주세요.');
-    }
+  const store = useUserStore();
+  const login = function(){
+    store.userLogin(email.value, password.value)
   }
+
   </script>
   
   <style scoped>
+  /* 스타일은 그대로 유지 */
   form {
     display: flex;
     flex-direction: column;
@@ -63,3 +61,4 @@
     background-color: #369b72;
   }
   </style>
+  

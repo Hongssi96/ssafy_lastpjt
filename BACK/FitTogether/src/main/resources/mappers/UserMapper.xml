@@ -4,6 +4,14 @@
     <select id="getUserById" parameterType="int" resultType="com.example.FitTogether.dto.UserDTO">
         SELECT * FROM users WHERE id = #{id}
     </select>
+    <select id="selectOne" parameterType="Map" resultType="UserDTO">
+		SELECT email, username 
+		FROM users
+		WHERE email = #{email} AND password = #{password}
+	</select>
+    <select id="getUserByEmail" parameterType="string" resultType="com.example.FitTogether.dto.UserDTO">
+        SELECT * FROM users WHERE email = #{email}
+    </select>
     <select id="getAllUsers" resultType="com.example.FitTogether.dto.UserDTO">
         SELECT * FROM users
     </select>

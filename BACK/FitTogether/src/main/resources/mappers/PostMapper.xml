@@ -4,6 +4,9 @@
     <select id="getPostById" parameterType="int" resultType="com.example.FitTogether.dto.PostDTO">
         SELECT * FROM posts WHERE id = #{id}
     </select>
+    <select id="getAllPost" resultType="com.example.FitTogether.dto.PostDTO">
+        SELECT * FROM posts
+    </select>
     <select id="getPostsByUserId" parameterType="int" resultType="com.example.FitTogether.dto.PostDTO">
         SELECT * FROM posts WHERE user_id = #{userId}
     </select>

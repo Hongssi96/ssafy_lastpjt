@@ -47,3 +47,6 @@ CREATE INDEX idx_user_id ON posts(user_id);
 CREATE INDEX idx_post_id ON likes(post_id);
 CREATE INDEX idx_follower_id ON follows(follower_id);
 CREATE INDEX idx_following_id ON follows(following_id);
+
+select * from post;
+

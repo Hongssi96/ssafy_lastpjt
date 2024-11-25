@@ -1,5 +1,6 @@
 package com.example.FitTogether.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.FitTogether.dto.PostDTO;
 import com.example.FitTogether.service.PostService;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,6 +33,11 @@ public class PostController {
         PostDTO post = postService.getPostById(id);
         return ResponseEntity.ok(post);
     }
+	@GetMapping
+	public ResponseEntity<List<PostDTO>> getAllPost(){
+		List<PostDTO> posts = postService.getAllPost();
+		return ResponseEntity.ok(posts);
+	}
 
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<PostDTO>> getPostsByUserId(@PathVariable int userId) {

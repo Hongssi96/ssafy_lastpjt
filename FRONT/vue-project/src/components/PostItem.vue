@@ -15,9 +15,17 @@
   
   <script setup>
   import { usePostStore } from '../stores/posts';
-  import { onMounted } from 'vue';
+  import { onMounted,ref } from 'vue';
  
-
+  defineProps({
+    post: {
+      type: Object,
+      required: true,
+    }
+  })
+  const incrementLike = () => {
+  post.likes++;
+  };
   
   </script>
   

@@ -1,31 +1,31 @@
 package com.example.FitTogether.controller;
 
-import java.util.List;
+import com.example.FitTogether.dto.UserDTO;
+import com.example.FitTogether.jwt.JwtUtil;
+import com.example.FitTogether.service.UserService;
+
+import jakarta.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.example.FitTogether.dto.UserDTO;
-import com.example.FitTogether.service.UserService;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
-    
-	@Autowired
-	private final UserService userService;
 
-    public UserController(UserService userService) {
+    @Autowired
+    private final UserService userService;
+    private final JwtUtil jwtUtil;
+
+    public UserController(UserService userService, JwtUtil jwtUtil) {
         this.userService = userService;
+        this.jwtUtil = jwtUtil;
     }
 
     @GetMapping("/{id}")
@@ -58,4 +58,36 @@ public class UserController {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
+    
+    @PostMapping("/signup")
+    public ResponseEntity<String> registerUser(@RequestBody UserDTO user) {
+        try {
+            userService.insertUser(user);
+            return new ResponseEntity<>("회원가입 성공", HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("회원가입 실패", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<Map<String, Object>> login(@RequestBody UserDTO user) {
+        HttpStatus status = null;
+    	Map<String, Object> result = new HashMap<>();
+    	UserDTO loginUser = userService.login(user.getEmail(), user.getPassword());
+    	if(loginUser != null) {
+    		result.put("message", "login 성공");
+    		result.put("access-token", jwtUtil.createToken(loginUser.getUsername()));
+    		status = HttpStatus.ACCEPTED;
+    	} else {
+    		status = HttpStatus.INTERNAL_SERVER_ERROR;
+    	}
+    	return new ResponseEntity<>(result, status);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(HttpSession session) {
+        session.invalidate();  // 세션을 무효화하여 로그아웃합니다.
+        return new ResponseEntity<>("로그아웃 성공", HttpStatus.OK);
+    }
+    
 }

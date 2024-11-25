@@ -8,13 +8,27 @@ const REST_API_URL = `http://localhost:8080/api/posts`
 export const usePostStore = defineStore('posts', () => {
   const postList = ref([])
   const getPostList = function() {
-    axios.get(REST_API_URL)
+    axios.get(REST_API_URL, {
+      headers: {
+        'access-token': sessionStorage.getItem('access-token')
+      }
+    })
     .then((response)=>{
       postList.value = response.data
     })
   }
   const createPost = function(post){
-    console.log(post)
+    axios({
+      url: REST_API_URL,
+      method: 'POST',
+      data: post
+    })
+    .then((res)=> {
+      console.log("출력 : ",res)
+    })
+    .catch((err)=>{
+      console.log("에러 : ",err)
+    })
   }
   return { postList, getPostList, createPost }
 });

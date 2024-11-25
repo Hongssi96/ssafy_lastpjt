@@ -1,10 +1,10 @@
 <template>
     <header id="header">
       <div class="header-content">
-        <h1 class="app-title">FitTogether</h1>
+        <h1 @click="navigateToMain" class="app-title">FitTogether</h1>
         <nav v-if="true">
+          <button @click="navigateToUserView" class="btn btn-secondary">My</button>
           <button @click="navigateToCreatePost" class="btn btn-secondary">+</button>
-          <button @click="logout">로그아웃</button>
         </nav>
       </div>
     </header>
@@ -12,18 +12,21 @@
   
   <script setup>
   import { useRouter } from 'vue-router';
-  import { useAuthStore } from '../stores/auth';
   
   const router = useRouter();
-  const authStore = useAuthStore();
   
-  function logout() {
-    authStore.logout();
-    router.push('/login');
+
+  
+  function navigateToMain() {
+    router.push('/');
   }
-  
+
   function navigateToCreatePost() {
     router.push('/create-post');
+  }
+
+  function navigateToUserView() {
+    router.push('/user');
   }
   </script>
   
@@ -75,4 +78,4 @@
     font-weight: bold;
     margin: 0;
   }
-  </style>
+  </style>{}

@@ -9,12 +9,9 @@
 <script setup>
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
-import { useAuthStore } from './stores/auth';
 import HeaderComponent from './components/HeaderComponent.vue';
 
 const router = useRouter();
-const authStore = useAuthStore();
-const isAuthenticated = ref(authStore.isAuthenticated);
 
 function scrollToTopPost() {
   router.push('/');
@@ -34,6 +31,6 @@ function navigateToCreatePost() {
 <style scoped>
 #app {
   text-align: center;
-  margin-top: 50px; /* 헤더 높이만큼 여백 추가 */
+  margin-top: 60px; /* 헤더 높이만큼 여백 추가 */
 }
 </style>

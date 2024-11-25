@@ -2,15 +2,18 @@
     <div class="create-post">
       <h2>게시물 작성하기</h2>
       <form @submit.prevent="createPost">
-        <div>
-          <label for="description">내용:</label>
-          <textarea id="description" v-model="description" required></textarea>
+          <div>
+              <label for="imageUrl">이미지 URL:</label>
+              <input type="text" id="imageUrl" v-model="post.imageUrl" required />
+              <div>
+                <label for="description">내용:</label>
+                <textarea id="description" v-model="post.description" required></textarea>
+              </div>
+            </div>
+        <div class="button-group">
+            <button @click="createPost">게시물 작성</button>
+            <button type="button" @click="goToPostView" class="btn-close">×</button>
         </div>
-        <div>
-          <label for="imageUrl">이미지 URL:</label>
-          <input type="text" id="imageUrl" v-model="imageUrl" required />
-        </div>
-        <button @click="createPost">게시물 작성</button>
       </form>
     </div>
   </template>
@@ -18,15 +21,22 @@
   <script setup>
   import { ref } from 'vue';
   import { usePostStore } from '../stores/posts';
+  import { useRouter } from 'vue-router';
   
+  const router = useRouter();
   const postStore = usePostStore();
   const post = ref({
-    user_id: '',
+    userId: '1',
     description: '',
     imageUrl: '',
   })
+
   const createPost = function(){
     postStore.createPost(post.value)
+  }
+
+  function goToPostView() {
+    router.push('/');
   }
   </script>
   
@@ -36,6 +46,13 @@
     padding: 20px;
     border: 1px solid #eaeaea;
     border-radius: 8px;
+  }
+
+  .button-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
   }
   
   form {

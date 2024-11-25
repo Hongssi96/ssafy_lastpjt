@@ -20,6 +20,10 @@ public class PostServiceImpl implements PostService {
     public PostDTO getPostById(int id) {
         return postDAO.getPostById(id);
     }
+	@Override
+	public List<PostDTO> getAllPost() {
+		return postDAO.getAllPost();
+	}
 
     @Override
     public List<PostDTO> getPostsByUserId(int userId) {
@@ -40,5 +44,6 @@ public class PostServiceImpl implements PostService {
     public void deletePost(int id) {
         postDAO.deletePost(id);
     }
+
 
 }
