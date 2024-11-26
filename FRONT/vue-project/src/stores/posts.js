@@ -4,6 +4,7 @@ import { defineStore } from 'pinia';
 import axios from 'axios';
 
 const REST_API_URL = `http://localhost:8080/api/posts`
+const REST_API_URL_LIKE = `http://localhost:8080/api/likes`
 
 export const usePostStore = defineStore('posts', () => {
   const postList = ref([])
@@ -21,7 +22,9 @@ export const usePostStore = defineStore('posts', () => {
     axios({
       url: REST_API_URL,
       method: 'POST',
-      data: post
+      data: post,
+      headers: {
+        'access-token': sessionStorage.getItem('access-token')}
     })
     .then((res)=> {
       console.log("출력 : ",res)
