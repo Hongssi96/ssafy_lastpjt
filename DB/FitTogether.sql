@@ -46,9 +46,9 @@ INSERT INTO users (username, email, password, created_at, updated_at) VALUES
 
 -- 게시글 테이블에 더미 데이터 추가 (posts)
 INSERT INTO posts (user_id, description, image_url, created_at, updated_at) VALUES
-(1, '첫 번째 게시글입니다.', 'https://dcimg3.dcinside.co.kr/viewimage.php?id=26bcc22febd3&no=24b0d769e1d32ca73ce886fa1bd62531c28ee23c453cf874f616b8e80f09782cf0b327590fb144b4edfd410785082e40b72c1d613856e5953f9839855e6d', NOW(), NOW()),
-(2, '두 번째 게시글입니다.', 'https://dcimg3.dcinside.co.kr/viewimage.php?id=26bcc22febd3&no=24b0d769e1d32ca73ce886fa1bd62531c28ee23c453cf874f616b8e80f09782cf0b327590fb144b4edfd410785082e40b72c1a6c3852ec9c349c39855e6d', NOW(), NOW()),
-(3, '세 번째 게시글입니다.', 'https://dcimg3.dcinside.co.kr/viewimage.php?id=26bcc22febd3&no=24b0d769e1d32ca73ce886fa1bd62531c28ee23c453cf874f616b8e80f09782cf0b327590fb144b4edfd410785082e40b72c4c326f57e398349f39855e6d', NOW(), NOW());
+(1, '운동이 최고~', 'https://image.ytn.co.kr/general/jpg/2020/1130/202011300700017010_d.jpg', NOW(), NOW()),
+(2, '오늘도 운동 완료', 'https://i.ibb.co/8zSyk1h/DALL-E-2024-11-26-21-36-21-A-realistic-depiction-of-a-person-taking-a-selfie-in-front-of-a-mirror-af.webp', NOW(), NOW()),
+(3, '열심히 운동합시다~', 'https://i.ibb.co/4RBm0sf/DALL-E-2024-11-26-21-36-24-A-realistic-depiction-of-a-person-taking-a-selfie-in-front-of-a-mirror-af.webp', NOW(), NOW());
 
 -- 좋아요 테이블에 더미 데이터 추가 (likes)
 INSERT INTO likes (user_id, post_id, created_at) VALUES
