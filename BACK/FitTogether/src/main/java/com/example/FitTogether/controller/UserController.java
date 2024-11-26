@@ -76,7 +76,7 @@ public class UserController {
     	UserDTO loginUser = userService.login(user.getEmail(), user.getPassword());
     	if(loginUser != null) {
     		result.put("message", "login 성공");
-    		result.put("access-token", jwtUtil.createToken(loginUser.getUsername()));
+    		result.put("access-token", jwtUtil.createToken(loginUser.getId(),loginUser.getUsername()));
     		status = HttpStatus.ACCEPTED;
     	} else {
     		status = HttpStatus.INTERNAL_SERVER_ERROR;

@@ -8,7 +8,7 @@ const REST_API_URL = `http://localhost:8080/api/users`
 
 export const useUserStore = defineStore('users', () => {
   const loginUser = ref(null)
-  
+  const loginUserId = ref(null)
   const userLogin = function(email, password){
     axios.post(`${REST_API_URL}/login`, {
       email:email,
@@ -18,9 +18,15 @@ export const useUserStore = defineStore('users', () => {
       sessionStorage.setItem('access-token', res.data['access-token'])
       
       const token = res.data['access-token'].split(".")
-      const name = JSON.parse(atob(token[1]))['name']
-      
+      const payload = JSON.parse(atob(token[1]));
+      const name = payload['name'];
+      const userId = payload['id'];
+
       loginUser.value = name;
+      loginUserId.value = userId;
+      sessionStorage.setItem('loginUserId', userId);
+      sessionStorage.setItem('loginUser', name)
+
       router.push("/");
     })
     .catch((e) => {
@@ -49,10 +55,13 @@ export const useUserStore = defineStore('users', () => {
   }
 
   const deleteUser = async function() {
+    const userId = sessionStorage.getItem('loginUserId')
     try {
-      await axios.delete(`${REST_API_URL}/`);
+      await axios.delete(`${REST_API_URL}/${userId}`);
       loginUser.value = null;
       sessionStorage.removeItem('access-token');
+      sessionStorage.removeItem('loginUser')
+      sessionStorage.removeItem('loginUserId')
       router.push('/');
       alert('유저 탈퇴가 완료되었습니다.');
     } catch (err) {

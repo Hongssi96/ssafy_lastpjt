@@ -17,9 +17,13 @@ public class JwtUtil {
 	private String key = "SSAFY_LASTPJT_FITTOGETHER_EXERCISE_AND_SHARE_WITH_OTHERS";
 	private SecretKey secretKey = Keys.hmacShaKeyFor(key.getBytes(StandardCharsets.UTF_8));
 
-	public String createToken(String name) {
+	public String createToken(int id, String name) {
 		Date exp = new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24);
-		return Jwts.builder().header().add("typ", "JWT").and().claim("name", name).expiration(exp).signWith(secretKey)
+		return Jwts.builder().header().add("typ", "JWT").and()
+				.claim("id", id)
+				.claim("name", name)
+				.expiration(exp)
+				.signWith(secretKey)
 				.compact();
 	}
 

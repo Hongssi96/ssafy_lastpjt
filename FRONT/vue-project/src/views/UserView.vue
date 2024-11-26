@@ -8,16 +8,18 @@
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>제목</th>
+                  <th>내용</th>
                   <th>좋아요</th>
-                  <th>생성 시간</th>
+                  <th>삭제</th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="post in userPosts" :key="post.id">
-                  <td>{{ post.title }}</td>
+                <tr v-for="post in postStore.userPosts" :key="post.id">
+                  <td>{{ post.description }}</td>
                   <td>{{ post.likes }}</td>
-                  <td>{{ post.createdAt }}</td>
+                  <td>
+                    <button @click="deletePost(post.id)" class="btn btn-danger btn-sm">삭제</button>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -33,16 +35,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref, onMounted, computed } from 'vue';
 import { useUserStore } from '@/stores/users';
-import axios from 'axios';
+import { usePostStore } from '@/stores/posts';
 
-const router = useRouter();
 const userStore = useUserStore();
+const postStore = usePostStore();
 
-const loginUser = ref(userStore.loginUser);
-const userPosts = ref([]); // 유저가 작성한 게시물 목록
+const loginUser = sessionStorage.getItem('loginUser');
 
 // 유저 탈퇴 함수
 const deleteUser = async () => {
@@ -52,20 +52,21 @@ const deleteUser = async () => {
 // 로그아웃 함수
 const logoutUser = () => {
   sessionStorage.removeItem('access-token');
+  sessionStorage.removeItem('loginUserId')
   location.reload();
 };
 
-const getUserPosts = async () => {
+// 게시물 삭제 함수
+const deletePost = async (postId) => {
   try {
-    const response = await axios.get(`http://localhost:8080/api/posts?user=${loginUser.value}`);
-    userPosts.value = response.data;
-  } catch (err) {
-    console.error('게시물 가져오기 중 오류가 발생했습니다:', err);
+    await postStore.deletePost(postId);
+    await postStore.getPostListById(); // 게시물 목록을 다시 불러오기
+  } catch (error) {
+    console.error('게시물 삭제 중 오류 발생:', error);
   }
 };
-
-onMounted(() => {
-  getUserPosts();
+onMounted(async () => {
+  await postStore.getPostListById();
 });
 </script>
 

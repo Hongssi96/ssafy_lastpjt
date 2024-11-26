@@ -33,14 +33,16 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const postStore = usePostStore();
+const id = sessionStorage.getItem('loginUserId')
 const post = ref({
-  userId: '1',
+  userId: id,
   description: '',
   imageUrl: '',
 });
 
 const createPost = function() {
   postStore.createPost(post.value);
+  router.push('/');
 };
 
 function goToPostView() {
