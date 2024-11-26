@@ -53,7 +53,6 @@ export const usePostStore = defineStore('posts', () => {
       }
     })
     .then((res) => {
-      console.log('게시물 생성 성공:', res);
       getPostList(); // 게시물 생성 후 전체 게시물 리스트 갱신
     })
     .catch((err) => {
