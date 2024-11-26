@@ -40,7 +40,7 @@ const router = createRouter({
 // 전역 가드 설정
 router.beforeEach((to, from, next) => {
   // 로그인 페이지가 아니면서 토큰이 없으면 로그인 페이지로 이동
-  if (to.name !== 'Login' && !sessionStorage.getItem('access-token')) {
+  if (to.name !== 'Login' && to.name !== 'SignUp' && !sessionStorage.getItem('access-token')) {
     next({ name: 'Login' });
   } else {
     next();

@@ -23,9 +23,6 @@
       required: true,
     }
   })
-  const incrementLike = () => {
-  post.likes++;
-  };
-  
+
   </script>
   

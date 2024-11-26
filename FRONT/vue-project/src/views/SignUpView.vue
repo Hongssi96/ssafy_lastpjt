@@ -1,26 +1,36 @@
 <template>
-  <div>
-    <h2>회원가입</h2>
-    <form @submit.prevent="signup">
-      <div>
-        <label for="username">사용자 이름:</label>
-        <input type="text" id="username" v-model="user.username" required />
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="card-title text-center mb-4">회원가입</h2>
+            <form @submit.prevent="signup">
+              <div class="form-group mb-3">
+                <label for="username" class="form-label">사용자 이름:</label>
+                <input type="text" id="username" v-model="user.username" required class="form-control" />
+              </div>
+              <div class="form-group mb-3">
+                <label for="email" class="form-label">이메일:</label>
+                <input type="email" id="email" v-model="user.email" required class="form-control" />
+              </div>
+              <div class="form-group mb-3">
+                <label for="password" class="form-label">비밀번호:</label>
+                <input type="password" id="password" v-model="user.password" required class="form-control" />
+              </div>
+              <div class="form-group mb-3">
+                <label for="confirmPassword" class="form-label">비밀번호 확인:</label>
+                <input type="password" id="confirmPassword" v-model="confirmPassword" required class="form-control" />
+              </div>
+              <button type="submit" class="btn btn-success w-100">회원가입</button>
+            </form>
+            <router-link to="/login" class="d-block mt-3 text-center">
+              <button class="btn btn-outline-success w-100">로그인 화면으로 돌아가기</button>
+            </router-link>
+          </div>
+        </div>
       </div>
-      <div>
-        <label for="email">이메일:</label>
-        <input type="email" id="email" v-model="user.email" required />
-      </div>
-      <div>
-        <label for="password">비밀번호:</label>
-        <input type="password" id="password" v-model="user.password" required />
-      </div>
-      <div>
-        <label for="confirmPassword">비밀번호 확인:</label>
-        <input type="password" id="confirmPassword" v-model="confirmPassword" required />
-      </div>
-      <button type="submit">회원가입</button>
-    </form>
-    <router-link to="/login"><button>로그인 화면으로 돌아가기</button></router-link>
+    </div>
   </div>
 </template>
 
@@ -60,33 +70,28 @@ async function signup() {
 </script>
 
 <style scoped>
-/* 스타일은 그대로 유지 */
-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.container {
+  max-width: 500px;
 }
 
-label {
-  margin-top: 10px;
+.card {
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
-input {
-  margin-bottom: 10px;
-  padding: 5px;
+.card-title {
+  font-size: 24px;
+  color: #333;
+}
+
+.btn {
+  padding: 10px;
   font-size: 16px;
+  transition: background-color 0.3s;
 }
 
-button {
-  padding: 10px 20px;
+.btn-outline-success:hover {
   background-color: #42b983;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-button:hover {
-  background-color: #369b72;
+  color: #ffffff;
 }
 </style>

@@ -6,7 +6,7 @@ import router from '@/router';
 
 const REST_API_URL = `http://localhost:8080/api/users`
 
-export const useUserStore = defineStore('posts', () => {
+export const useUserStore = defineStore('users', () => {
   const loginUser = ref(null)
   
   const userLogin = function(email, password){
@@ -21,7 +21,10 @@ export const useUserStore = defineStore('posts', () => {
       const name = JSON.parse(atob(token[1]))['name']
       
       loginUser.value = name;
-      router.replace("/");
+      router.push("/");
+    })
+    .catch((e) => {
+      console.log(e)
     })
   }
   const userList = ref([])
